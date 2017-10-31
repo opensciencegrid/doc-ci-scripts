@@ -1,0 +1,34 @@
+#!/bin/bash -xe
+
+. .travis.env
+
+# Push to a different repo if the branch name begins with 'itb.'
+if [[ "${TRAVIS_BRANCH}" =~ itb\..* ]]; then
+    ENCRYPTED_FILE="$ITB_ENCRYPTED_FILE"
+    KEY="$ITB_KEY"
+    IV="$ITB_IV"
+    REPO="$ITB_REPO"
+elif [[ "${TRAVIS_BRANCH}" != "master" ]]; then
+    print "Not deploying for non-master, non-ITB branch"
+    return
+fi
+
+# We can't deploy if any of these vars are empty
+for variable in $KEY $IV $REPO $ENCRYPTED_FILE; do
+    if [ -z $variable ]; then
+        echo "ERROR: Found empty KEY, IV, REPO, or ENCRYPTED_FILE variable. Exiting."
+        exit 1
+    fi
+done
+
+openssl aes-256-cbc -K "$KEY" -iv "$IV" -in "$ENCRYPTED_FILE" -out deploy-key -d
+
+chmod 600 deploy-key
+eval `ssh-agent -s`
+ssh-add deploy-key
+git config user.name "Automatic Publish"
+git config user.email "goc@opensciencegrid.org"
+git remote add gh-token "git@github.com:$REPO.git";
+git fetch gh-token && git fetch gh-token gh-pages:gh-pages
+echo "Pushing to github"
+PYTHONPATH=src/ mkdocs gh-deploy -v --clean --remote-name gh-token

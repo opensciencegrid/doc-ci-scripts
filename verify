@@ -1,0 +1,4 @@
+#!/bin/bash -xe
+
+PYTHONPATH=src/ mkdocs build --verbose --strict
+linkchecker --config=ci/linkchecker.config site/index.html
