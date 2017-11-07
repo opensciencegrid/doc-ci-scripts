@@ -2,8 +2,11 @@
 
 . .travis.env
 
+if [[ "${TRAVIS_PULL_REQUEST}" == "true" ]]; then
+    echo "Github page deployment not performed for pull requests"
+    return
 # Push to a different repo if the branch name begins with 'itb.'
-if [[ "${TRAVIS_BRANCH}" =~ itb\..* ]]; then
+elif [[ "${TRAVIS_BRANCH}" =~ itb\..* ]]; then
     ENCRYPTED_FILE="$ITB_ENCRYPTED_FILE"
     KEY="$ITB_KEY"
     IV="$ITB_IV"
@@ -14,7 +17,7 @@ if [[ "${TRAVIS_BRANCH}" =~ itb\..* ]]; then
     sed -i 's/\(.*_url: .*\/docs\)\//\1-itb\//' mkdocs.yml
     sed -i 's/google_analytics.*//' mkdocs.yml
 elif [[ "${TRAVIS_BRANCH}" != "master" ]]; then
-    print "Not deploying for non-master, non-ITB branch"
+    echo "Github page deployment not performed for non-master, non-ITB branch"
     return
 fi
 
