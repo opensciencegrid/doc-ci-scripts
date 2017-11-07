@@ -16,6 +16,14 @@ elif [[ "${TRAVIS_BRANCH}" =~ itb\..* ]]; then
     sed -i 's/\(site_name: OSG\) \(Documentation\)/\1 ITB \2/' mkdocs.yml
     sed -i 's/\(.*_url: .*\/docs\)\//\1-itb\//' mkdocs.yml
     sed -i 's/google_analytics.*//' mkdocs.yml
+
+    # Change color of ITB nav bar
+    sed -i 's/\(extra_css:\)/\1\n  - css\/itb.css/' mkdocs.yml
+    cat > docs/css/itb.css << EOF
+.wy-side-nav-search {
+background-color: #CC0000;
+}
+EOF
 elif [[ "${TRAVIS_BRANCH}" != "master" ]]; then
     echo "Github page deployment not performed for non-master, non-ITB branch"
     exit 0
