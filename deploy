@@ -2,9 +2,9 @@
 
 . .travis.env
 
-if [[ "${TRAVIS_PULL_REQUEST}" == "true" ]]; then
+if [[ "${TRAVIS_PULL_REQUEST}" != "false" ]]; then
     echo "Github page deployment not performed for pull requests"
-    return
+    exit 0
 # Push to a different repo if the branch name begins with 'itb.'
 elif [[ "${TRAVIS_BRANCH}" =~ itb\..* ]]; then
     ENCRYPTED_FILE="$ITB_ENCRYPTED_FILE"
@@ -18,7 +18,7 @@ elif [[ "${TRAVIS_BRANCH}" =~ itb\..* ]]; then
     sed -i 's/google_analytics.*//' mkdocs.yml
 elif [[ "${TRAVIS_BRANCH}" != "master" ]]; then
     echo "Github page deployment not performed for non-master, non-ITB branch"
-    return
+    exit 0
 fi
 
 # We can't deploy if any of these vars are empty
