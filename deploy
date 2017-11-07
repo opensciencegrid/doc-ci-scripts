@@ -22,8 +22,8 @@ elif [[ "${TRAVIS_BRANCH}" != "master" ]]; then
 fi
 
 # We can't deploy if any of these vars are empty
-for variable in $KEY $IV $REPO $ENCRYPTED_FILE; do
-    if [ -z $variable ]; then
+for variable in "$KEY" "$IV" "$REPO" "$ENCRYPTED_FILE"; do
+    if [ -z "$variable" ]; then
         echo "ERROR: Found empty KEY, IV, REPO, or ENCRYPTED_FILE variable. Exiting."
         exit 1
     fi
