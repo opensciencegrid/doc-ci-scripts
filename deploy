@@ -23,6 +23,9 @@ elif [[ "${TRAVIS_BRANCH}" =~ itb\..* ]]; then
 .wy-side-nav-search {
 background-color: #CC0000;
 }
+.wy-nav-top {
+background-color: #CC0000;
+}
 EOF
 elif [[ "${TRAVIS_BRANCH}" != "master" ]]; then
     echo "Github page deployment not performed for non-master, non-ITB branch"
