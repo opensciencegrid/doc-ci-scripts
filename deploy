@@ -19,14 +19,9 @@ elif [[ "${TRAVIS_BRANCH}" =~ itb\..* ]]; then
 
     # Change color of ITB nav bar
     sed -i 's/\(extra_css:\)/\1\n  - css\/itb.css/' mkdocs.yml
-    cat > docs/css/itb.css << EOF
-.wy-side-nav-search {
-background-color: #CC0000;
-}
-.wy-nav-top {
-background-color: #CC0000;
-}
-EOF
+    CSS_DIR='docs/css/'
+    mkdir -p $CSS_DIR
+    cp ci/itb.css $CSS_DIR
 elif [[ "${TRAVIS_BRANCH}" != "master" ]]; then
     echo "Github page deployment not performed for non-master, non-ITB branch"
     exit 0
