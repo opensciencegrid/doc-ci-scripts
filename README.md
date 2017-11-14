@@ -16,10 +16,10 @@ Getting started
 
 1. From the root directory of your parent repository, copy the template to your travis configuration:
 
-        $ cp ci/travis.template.yml .travis.yml
-        $ cp ci/travis.template.env .travis.env
+        $ cp ci/travis.yml.template .travis.yml
+        $ cp ci/travis.env.template .travis.env
 
-    Follow the instructions in the comments of [the environment file](travis.template.env) to customize Travis-CI for the parent repostiry. Merge in any local customizations from your existing `.travis.yml` file to the template.
+    Follow the instructions in the comments of [the environment file](travis.env.template) to customize Travis-CI for the parent repostiry. Merge in any local customizations from your existing `.travis.yml` file to the template.
 
 See the [docs repository](https://github.com/opensciencegrid/docs/) for an example [.travis.yml](https://github.com/opensciencegrid/docs/blob/master/.travis.yml) and [.travis.env](https://github.com/opensciencegrid/docs/blob/master/.travis.yml).
 
