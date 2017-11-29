@@ -2,6 +2,8 @@
 
 . .travis.env
 
+REPO=$TRAVIS_REPO_SLUG
+
 if [[ "${TRAVIS_PULL_REQUEST}" != "false" ]]; then
     echo "Github page deployment not performed for pull requests"
     exit 0
