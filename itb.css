@@ -7,3 +7,9 @@ background-color: #CC0000;
 .md-header {
 background-color: #CC0000;
 }
+html .md-nav--primary .md-nav__title--site {
+background-color: #CC0000;
+}
+.md-nav__source {
+background-color: #A30000;
+}
