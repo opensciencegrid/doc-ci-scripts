@@ -1,9 +1,10 @@
-#!/bin/bash -xe
+#!/bin/bash -x
 
 PYTHONPATH=src/ mkdocs serve --verbose --strict &
-set +xe
 timeout 15 bash -c 'until cat > /dev/tcp/localhost/8000; do sleep 0.5; done' > /dev/null 2>&1
-set -xe
-[ $? -eq 0 ] || exit 1
 linkchecker --config=ci/linkchecker.config 'http://localhost:8000/'
-pkill mkdocs # cleanup after ourselves
+
+# cleanup after ourselves
+linkchecker_rc=$?
+pkill mkdocs
+exit $linkchecker_rc
