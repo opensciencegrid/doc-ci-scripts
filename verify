@@ -1,5 +1,9 @@
 #!/bin/bash -xe
 
-PYTHONPATH=src/ mkdocs build --verbose --strict
-sed -i "s/\/${TRAVIS_REPO_SLUG#*/}\///" site/404.html # workaround for https://github.com/mkdocs/mkdocs/issues/1317
-linkchecker --config=ci/linkchecker.config site/index.html
+PYTHONPATH=src/ mkdocs serve --verbose --strict &
+set +xe
+timeout 15 bash -c 'until cat > /dev/tcp/localhost/8000; do sleep 0.5; done' > /dev/null 2>&1
+set -xe
+[ $? -eq 0 ] || exit 1
+linkchecker --config=ci/linkchecker.config 'http://localhost:8000/'
+pkill mkdocs # cleanup after ourselves
