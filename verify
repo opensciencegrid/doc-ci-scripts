@@ -1,7 +1,7 @@
 #!/bin/bash -x
 
 PYTHONPATH=src/ mkdocs serve --verbose --strict &
-timeout 15 bash -c 'until cat > /dev/tcp/localhost/8000; do sleep 0.5; done' > /dev/null 2>&1
+timeout 30 bash -c 'until cat > /dev/tcp/localhost/8000; do sleep 0.5; done' > /dev/null 2>&1
 linkchecker --config=ci/linkchecker.config 'http://localhost:8000/'
 
 # cleanup after ourselves
