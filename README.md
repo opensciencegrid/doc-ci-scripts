@@ -26,8 +26,11 @@ See the [docs repository](https://github.com/opensciencegrid/docs/) for an examp
 Updating your submodule
 -----------------------
 
-To update the submodule yourself, perform the following procedure:
+To update the submodule yourself, perform the following procedure from your documentation repository:
 
+1. Check the contents of the `ci` directory. If it's empty, run the following to pull down the latest commit from the `doc-ci-scripts` repository:
+
+        $ git submodule update --init --recursive
 
 1. `cd` into the `ci` directory
 1. Checkout the commit or tag that you're interested in. To update to the latest commit from `master`, run the following command:
