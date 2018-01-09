@@ -16,7 +16,7 @@ elif [[ "${TRAVIS_BRANCH}" =~ itb\..* ]]; then
 
     # Change site info for ITB documentation
     sed -i 's/\(site_name: .*\)/\1 \(ITB\)/' mkdocs.yml
-    sed -i 's/\(.*_url: .*\/docs\)\//\1-itb\//' mkdocs.yml
+    sed -i 's/\(.*_url: .*\)\//\1-itb\//' mkdocs.yml
     sed -i 's/google_analytics.*//' mkdocs.yml
 
     # Change color of ITB nav bar
