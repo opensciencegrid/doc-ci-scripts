@@ -5,3 +5,4 @@ linkchecker
 requests==2.9.2 # https://github.com/wummel/linkchecker/issues/649
 mkdocs-material
 mkdocs-windmill
+tornado<5.0
