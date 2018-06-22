@@ -8,7 +8,7 @@ if [[ "${TRAVIS_PULL_REQUEST}" != "false" ]]; then
     echo "Github page deployment not performed for pull requests"
     exit 0
 # Push to a different repo if the branch name begins with 'itb.'
-elif [[ "${TRAVIS_BRANCH}" =~ itb\..* ]]; then
+elif [[ "${TRAVIS_BRANCH}" =~ "$ITB_BRANCH_REGEXP" ]]; then
     ENCRYPTED_FILE="$ITB_ENCRYPTED_FILE"
     KEY="$ITB_KEY"
     IV="$ITB_IV"
