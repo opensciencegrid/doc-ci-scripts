@@ -25,8 +25,12 @@ elif [[ "${TRAVIS_BRANCH}" =~ "$ITB_BRANCH_REGEXP" ]]; then
     mkdir -p $CSS_DIR
     cp ci/itb.css $CSS_DIR
 
-    # Prevent site crawling; requires theme custom_dir set to osgthedocs
-    THEME_DIR='osgthedocs'
+    # Prevent site crawling
+    THEME_DIR=$(awk '/custom_dir:/ {print $2}' mkdocs.yml)
+    if [ -z "$THEME_DIR" ]; then
+        echo "ERROR: missing 'custom_dir' in mkdocs.yml (https://www.mkdocs.org/user-guide/styling-your-docs/#customizing-a-theme)"
+        exit 1
+    fi
     mkdir -p $THEME_DIR
     cp ci/no-robots.html $THEME_DIR/main.html
 elif [[ "${TRAVIS_BRANCH}" != "master" ]]; then
