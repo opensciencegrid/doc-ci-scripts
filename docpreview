@@ -3,12 +3,25 @@ realpath () {
     python -c "import sys, os; sys.stdout.write(os.path.realpath('''$1''')+'\n')"
 }
 cd "$(dirname "$(realpath $0)")"
-topdir=$(git rev-parse --show-superproject-working-tree)  # use what we're a submodule of
-if [[ -z $topdir ]]; then
-    # not a submodule
-    topdir=$(git rev-parse --show-toplevel)
+if ! git rev-parse &>/dev/null; then
+    echo >&2 "This script needs to be inside a git repo"
+    exit 1
 fi
+
+# git rev-parse --show-superproject-working-tree does not work on old versions
+# of git so we're hacking it.
+
+# No clear way of telling if we're in a submodule that works on old versions of
+# git so special case it (ugh).
+
+topdir=$(git rev-parse --show-toplevel)
 cd "$topdir"
+if [[ $(basename "$topdir") == ci ]]; then
+    cd ..
+    topdir=$(git rev-parse --show-toplevel)
+    cd "$topdir"
+fi
+
 PYTHONPATH=$(pwd)/src
 export PYTHONPATH
 exec mkdocs serve "$@"
