@@ -22,6 +22,8 @@ if [[ $(basename "$topdir") == ci ]]; then
     cd "$topdir"
 fi
 
+echo >&2 "Serving docs in $topdir"
+
 PYTHONPATH=$(pwd)/src
 export PYTHONPATH
 
