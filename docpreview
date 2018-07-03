@@ -24,4 +24,21 @@ fi
 
 PYTHONPATH=$(pwd)/src
 export PYTHONPATH
+
+if [[ -z $VIRTUAL_ENV ]]; then
+    # We're not _in_ a virtualenv, but one may exist so use it.
+    if [[ -e env/bin/mkdocs ]]; then
+        PATH=$(pwd)/env/bin:$PATH
+    elif [[ -e bin/mkdocs ]]; then
+        PATH=$(pwd)/bin:$PATH
+    fi
+fi
+if ! which mkdocs &>/dev/null; then
+    echo >&2 "mkdocs not found"
+    exit 1
+else
+    echo >&2 "Using $(which mkdocs)"
+fi
+
 exec mkdocs serve "$@"
+
