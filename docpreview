@@ -15,12 +15,11 @@ fi
 # git so special case it (ugh).
 
 topdir=$(git rev-parse --show-toplevel)
-cd "$topdir"
 if [[ $(basename "$topdir") == ci ]]; then
-    cd ..
+    cd "$topdir/.."
     topdir=$(git rev-parse --show-toplevel)
-    cd "$topdir"
 fi
+cd "$topdir"
 
 echo >&2 "Serving docs in $topdir"
 
