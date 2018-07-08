@@ -2,7 +2,7 @@
 
 SKIP_LINKCHECKER=0
 
-while getopts :s: opt; do
+while getopts :s opt; do
     case $opt in
         s)
             SKIP_LINKCHECKER=1
@@ -17,9 +17,8 @@ done
 PYTHONPATH=src/ mkdocs serve --verbose --strict &
 timeout 30 bash -c 'until (echo > /dev/tcp/localhost/8000); do sleep 0.5; done' > /dev/null 2>&1
 
-if [ $SKIP_LINKCHECKER -eq 0 ]; then
+[ $SKIP_LINKCHECKER -eq 0 ] && \
     timeout 600 bash -c 'linkchecker --config=ci/linkchecker.config http://localhost:8000/'
-fi
 
 # cleanup after ourselves
 verify_rc=$?
