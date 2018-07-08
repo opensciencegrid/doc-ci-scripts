@@ -1,10 +1,27 @@
 #!/bin/bash -x
 
+SKIP_LINKCHECKER=0
+
+while getopts :s: opt; do
+    case $opt in
+        s)
+            SKIP_LINKCHECKER=1
+            ;;
+        \?)
+            echo "Invalid option: -$opt"
+            exit 1
+            ;;
+    esac
+done
+
 PYTHONPATH=src/ mkdocs serve --verbose --strict &
 timeout 30 bash -c 'until (echo > /dev/tcp/localhost/8000); do sleep 0.5; done' > /dev/null 2>&1
-timeout 600 bash -c 'linkchecker --config=ci/linkchecker.config http://localhost:8000/'
+
+if [ $SKIP_LINKCHECKER -eq 0 ]; then
+    timeout 600 bash -c 'linkchecker --config=ci/linkchecker.config http://localhost:8000/'
+fi
 
 # cleanup after ourselves
-linkchecker_rc=$?
+verify_rc=$?
 pkill mkdocs
-exit $linkchecker_rc
+exit $verify_rc
