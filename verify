@@ -5,7 +5,6 @@ timeout 30 bash -c 'until (echo > /dev/tcp/localhost/8000); do sleep 0.5; done' 
 
 if `which linkchecker &>/dev/null`; then
     timeout 600 bash -c 'linkchecker --config=ci/linkchecker.config http://localhost:8000/'
-    linkchecker --config=ci/linkchecker.config 'http://localhost:8000/'
     rc=$?
 else
     wget http://localhost:8000
