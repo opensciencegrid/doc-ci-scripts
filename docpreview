@@ -1,0 +1,45 @@
+#!/bin/bash
+realpath () {
+    python -c "import sys, os; sys.stdout.write(os.path.realpath('''$1''')+'\n')"
+}
+cd "$(dirname "$(realpath $0)")"
+if ! git rev-parse &>/dev/null; then
+    echo >&2 "This script needs to be inside a git repo"
+    exit 1
+fi
+
+# git rev-parse --show-superproject-working-tree does not work on old versions
+# of git so we're hacking it.
+
+# No clear way of telling if we're in a submodule that works on old versions of
+# git so special case it (ugh).
+
+topdir=$(git rev-parse --show-toplevel)
+if [[ $(basename "$topdir") == ci ]]; then
+    cd "$topdir/.."
+    topdir=$(git rev-parse --show-toplevel)
+fi
+cd "$topdir"
+
+echo >&2 "Serving docs in $topdir"
+
+PYTHONPATH=$(pwd)/src
+export PYTHONPATH
+
+if [[ -z $VIRTUAL_ENV ]]; then
+    # We're not _in_ a virtualenv, but one may exist so use it.
+    if [[ -e env/bin/mkdocs ]]; then
+        PATH=$(pwd)/env/bin:$PATH
+    elif [[ -e bin/mkdocs ]]; then
+        PATH=$(pwd)/bin:$PATH
+    fi
+fi
+if ! which mkdocs &>/dev/null; then
+    echo >&2 "mkdocs not found"
+    exit 1
+else
+    echo >&2 "Using $(which mkdocs)"
+fi
+
+exec mkdocs serve "$@"
+
