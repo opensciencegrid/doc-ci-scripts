@@ -4,6 +4,8 @@
 
 REPO=$TRAVIS_REPO_SLUG
 
+[[ -z $ITB_BRANCH_REGEXP ]] && ITB_BRANCH_REGEXP="itb\..*"
+
 if [[ "${TRAVIS_PULL_REQUEST}" != "false" ]]; then
     echo "Github page deployment not performed for pull requests"
     exit 0
