@@ -1,8 +1,5 @@
-mkdocs==0.17.1 # freeze mkdocs version
-MarkdownHighlight
-pygments
+mkdocs==0.17.5 # freeze mkdocs version
 linkchecker; python_version < '3.0'
 requests==2.9.2 # https://github.com/wummel/linkchecker/issues/649
-mkdocs-material
-mkdocs-windmill
-tornado<5.0
+mkdocs-material==2.9.4
+mkdocs-windmill==0.1.6
