@@ -26,9 +26,9 @@ elif [[ "${TRAVIS_BRANCH}" =~ $ITB_BRANCH_REGEXP ]]; then
     CSS_DIR='docs/css/'
     mkdir -p $CSS_DIR
     # If we set the colors in extra.css, replace them with the ITB colors.
-    # Otherwise, copy over the ITB color CSS.
     sed -i 's/#343a40/#CC0000/' $CSS_DIR/extra.css ||:
     sed -i 's/#1f2326/#A30000/' $CSS_DIR/extra.css ||:
+    # Copy over the ITB color CSS, handling the case where extra.css does not exist
     cp ci/itb.css $CSS_DIR
 
     # Prevent site crawling
