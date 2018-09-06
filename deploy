@@ -27,8 +27,9 @@ elif [[ "${TRAVIS_BRANCH}" =~ $ITB_BRANCH_REGEXP ]]; then
     mkdir -p $CSS_DIR
     # If we set the colors in extra.css, replace them with the ITB colors.
     # Otherwise, copy over the ITB color CSS.
-    sed -i 's/#343a40/#CC0000/' $CSS_DIR/extra.css || cp ci/itb.css $CSS_DIR
+    sed -i 's/#343a40/#CC0000/' $CSS_DIR/extra.css ||:
     sed -i 's/#1f2326/#A30000/' $CSS_DIR/extra.css ||:
+    cp ci/itb.css $CSS_DIR
 
     # Prevent site crawling
     THEME_DIR=$(awk '/custom_dir:/ {print $2}' mkdocs.yml)
