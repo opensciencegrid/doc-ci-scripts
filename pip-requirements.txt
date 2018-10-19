@@ -1,3 +1,4 @@
+Markdown==2.6.11  # Backversioned due to https://github.com/Python-Markdown/markdown/issues/725
 mkdocs==1.0.4
 linkchecker; python_version < '3.0'
 requests==2.9.2 # https://github.com/wummel/linkchecker/issues/649
