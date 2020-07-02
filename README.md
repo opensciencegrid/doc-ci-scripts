@@ -6,7 +6,7 @@ This repository contains common files and scripts for verification and deploymen
 Getting started
 ---------------
 
-1. From the directory containing your parent repository
+1. From root directory of your parent repository, add the `doc-ci-scripts` submodule:
 
         $ git submodule add https://github.com/opensciencegrid/doc-ci-scripts ci
 
