@@ -3,5 +3,5 @@ pymdown-extensions<6.3  # 6.3+ requires Markdown 3.2
 mkdocs; python_version < '3.0'
 linkchecker; python_version < '3.0'
 requests==2.9.2 # https://github.com/wummel/linkchecker/issues/649
-mkdocs-material==2.9.4
+mkdocs-material<4 # 4.0+ need mkdocs-material-extensions, which aren't in python 2
 mkdocs-windmill==0.1.6
