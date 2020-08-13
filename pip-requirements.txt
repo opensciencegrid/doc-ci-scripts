@@ -1,7 +1,7 @@
-Markdown==2.6.11  # Backversioned due to https://github.com/Python-Markdown/markdown/issues/725
-pymdown-extensions==5.0  # The latest versions requires Markdown>=3.0.1
-mkdocs==0.17.5
+Markdown<3.2  # 3.2+ requires python 3
+pymdown-extensions<6.3  # 6.3+ requires Markdown 3.2
+mkdocs; python_version < '3.0'
 linkchecker; python_version < '3.0'
 requests==2.9.2 # https://github.com/wummel/linkchecker/issues/649
-mkdocs-material==2.9.4
+mkdocs-material<4 # 4.0+ need mkdocs-material-extensions, which aren't in python 2
 mkdocs-windmill==0.1.6
